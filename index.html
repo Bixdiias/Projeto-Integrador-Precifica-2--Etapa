@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precifica | Preços e Propostas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- BARRA LATERAL (SIDEBAR) -->
+        <aside class="sidebar no-print" id="sidebar">
+            <div class="sidebar-top">
+                <div class="brand">
+                    <div class="brand-icon">P</div>
+                    <div class="brand-text">
+                        <strong>Precifica</strong>
+                        <span>PREÇOS E PROPOSTAS</span>
+                    </div>
+                </div>
+
+                <div class="menu-label">MENU PRINCIPAL</div>
+                <nav class="nav-menu">
+                    <button class="nav-item active" data-view="visao-geral" onclick="navigateTo('visao-geral')">
+                        <span class="nav-icon">⊞</span> Visão geral
+                    </button>
+                    <button class="nav-item" data-view="novo-orcamento" onclick="navigateTo('novo-orcamento')">
+                        <span class="nav-icon">+</span> Novo orçamento
+                    </button>
+                    <button class="nav-item" data-view="proposta" onclick="navigateTo('proposta')">
+                        <span class="nav-icon">📄</span> Proposta PDF
+                    </button>
+                    <button class="nav-item" data-view="orcamentos-salvos" onclick="navigateTo('orcamentos-salvos')">
+                        <span class="nav-icon">▤</span> Orçamentos salvos
+                    </button>
+                </nav>
+            </div>
+
+            <div class="sidebar-bottom">
+                <div class="sidebar-tip-card">
+                    <strong>Organize seu trabalho.</strong>
+                    <p>Calcule seus preços com mais clareza e prepare propostas profissionais.</p>
+                </div>
+                <div class="sidebar-footer-note">Projeto Integrador · ADS</div>
+            </div>
+        </aside>
+
+        <!-- ÁREA PRINCIPAL DE CONTEÚDO -->
+        <div class="main-area">
+            <!-- CABEÇALHO SUPERIOR -->
+            <header class="page-topbar no-print">
+                <div class="topbar-left">
+                    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+                    <div>
+                        <span class="eyebrow" id="header-eyebrow">FERRAMENTA DE PRECIFICAÇÃO</span>
+                        <h1 class="page-title" id="header-title">Visão geral</h1>
+                    </div>
+                </div>
+                <div class="status-pill">
+                    <span class="status-dot"></span> Dados salvos neste navegador
+                </div>
+            </header>
+
+            <main class="content-body">
+
+                <!-- 1. VISÃO GERAL -->
+                <section id="view-visao-geral" class="view active">
+                    <div class="hero-banner">
+                        <div class="hero-content">
+                            <span class="hero-eyebrow">BEM-VINDO AO PRECIFICA</span>
+                            <h2>Suas propostas,<br>mais organizadas.</h2>
+                            <p>Calcule o valor da sua hora, monte orçamentos e compare condições comerciais em um só lugar.</p>
+                            <button type="button" class="btn-white" onclick="navigateTo('novo-orcamento')">
+                                Criar orçamento <span>→</span>
+                            </button>
+                        </div>
+
+                        <div class="hero-graphic">
+                            <div class="circle-ring">
+                                <span class="currency-big">R$</span>
+                                <div class="floating-badge badge-top">
+                                    <small>Valor/hora</small>
+                                    <strong>calculado</strong>
+                                </div>
+                                <div class="floating-badge badge-bottom">
+                                    <small>Proposta</small>
+                                    <strong>organizada ✓</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-heading">
+                        <span class="eyebrow">ACOMPANHAMENTO</span>
+                        <h3>Resumo</h3>
+                    </div>
+
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <span class="kpi-label">Orçamentos cadastrados</span>
+                            <strong class="kpi-value" id="dash-qtd-orcamentos">0</strong>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">Soma dos orçamentos</span>
+                            <strong class="kpi-value" id="dash-soma-orcamentos">R$ 0,00</strong>
+                        </div>
+                        <div class="kpi-card">
+                            <span class="kpi-label">Valor/hora de referência</span>
+                            <strong class="kpi-value" id="dash-valor-hora">R$ 0,00</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. NOVO ORÇAMENTO + CENÁRIOS -->
+                <section id="view-novo-orcamento" class="view">
+                    <div class="wizard-tabs no-print">
+                        <button class="w-tab active" data-wstep="1" onclick="setWizardStep(1)">1. Montagem do Orçamento</button>
+                        <button class="w-tab" data-wstep="2" onclick="setWizardStep(2)">2. Comparação de Cenários</button>
+                    </div>
+
+                    <!-- ETAPA 1: MONTAGEM DO ORÇAMENTO -->
+                    <div id="wstep-1" class="wizard-pane active">
+                        <!-- DADOS DO PROJETO E ETAPAS (EM CIMA) -->
+                        <div class="panel-card mb-20">
+                            <div class="form-row">
+                                <div class="form-group flex-2">
+                                    <label for="projeto-titulo">Nome do Projeto / Serviço</label>
+                                    <input type="text" id="projeto-titulo" placeholder="Ex: Desenvolvimento de Sistema Web">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cliente-nome">Cliente</label>
+                                    <input type="text" id="cliente-nome" placeholder="Ex: Empresa ABC Ltda.">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="servico-descricao">Descrição Geral do Serviço / Objetivo</label>
+                                <textarea id="servico-descricao" rows="2" placeholder="Descreva brevemente o escopo geral e os objetivos do serviço contratado..."></textarea>
+                            </div>
+
+                            <hr class="divider">
+                            <h4 class="sub-heading">Itens e Etapas do Orçamento</h4>
+
+                            <div class="add-bar">
+                                <input type="text" id="item-desc" placeholder="Descrição da etapa (ex: Prototipagem e Design)">
+                                <input type="number" id="item-horas" min="0.5" step="0.5" placeholder="Horas">
+                                <button type="button" class="btn-primary" onclick="addEtapa()">+ Adicionar</button>
+                            </div>
+
+                            <div class="table-wrap">
+                                <table class="clean-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Etapa / Entregável</th>
+                                            <th>Horas</th>
+                                            <th>Subtotal</th>
+                                            <th class="text-right">Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="lista-etapas"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- CÁLCULO DO VALOR/HORA E TOTAIS (ABAIXO DO ORÇAMENTO) -->
+                        <div class="panel-card">
+                            <div class="saved-header" style="margin-bottom: 12px;">
+                                <div>
+                                    <h4 class="sub-heading" style="margin-bottom: 2px;">Cálculo do Valor/Hora</h4>
+                                    <p class="card-subtitle" style="margin-bottom: 0;">As horas são preenchidas automaticamente conforme as etapas do orçamento.</p>
+                                </div>
+                                <div style="text-align: right;">
+                                    <small style="display:block; color: var(--text-muted);">Valor/Hora Aplicado</small>
+                                    <strong id="orc-valor-hora-badge" style="font-size: 1.35rem; color: var(--banner-bg);">R$ 0,00</strong>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="orc-horas-dia">Horas / dia</label>
+                                    <input type="number" id="orc-horas-dia" min="0" step="0.5" placeholder="Ex: 84">
+                                </div>
+                                <div class="form-group">
+                                    <label for="orc-valor-hora-direto">Valor/Hora Base (R$)</label>
+                                    <input type="number" id="orc-valor-hora-direto" min="0" step="0.01" placeholder="Ex: 18.50">
+                                </div>
+                                <div class="form-group">
+                                    <label for="orc-margem-lucro">Margem de Lucro (%)</label>
+                                    <input type="number" id="orc-margem-lucro" min="0" max="500" placeholder="Ex: 30">
+                                </div>
+                            </div>
+
+                            <div class="totals-bar">
+                                <div class="form-group max-240">
+                                    <label for="custos-adicionais">Custos Adicionais (R$)</label>
+                                    <input type="number" id="custos-adicionais" min="0" step="0.01">
+                                </div>
+                                <div class="totals-numbers">
+                                    <span>Total de Horas: <strong id="orc-total-horas">0h</strong></span>
+                                    <span>Serviços: <strong id="orc-valor-etapas">R$ 0,00</strong></span>
+                                    <span class="total-big">Total Base: <strong id="orc-total-geral">R$ 0,00</strong></span>
+                                </div>
+                            </div>
+
+                            <div class="pane-footer">
+                                <span></span>
+                                <button type="button" class="btn-primary" onclick="setWizardStep(2)">Comparar Cenários →</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ETAPA 2: COMPARAÇÃO DE CENÁRIOS -->
+                    <div id="wstep-2" class="wizard-pane">
+                        <div class="panel-card mb-20">
+                            <div class="form-row align-center">
+                                <div class="form-group">
+                                    <label for="desconto-personalizado">Desconto para Pagamento à Vista: <strong id="desconto-valor-label">10%</strong></label>
+                                    <input type="range" id="desconto-personalizado" min="0" max="40" value="10">
+                                </div>
+                                <div class="form-group">
+                                    <label for="condicao-pagamento">Condição Escolhida para Proposta</label>
+                                    <select id="condicao-pagamento">
+                                        <option value="avista">À Vista (PIX / Transferência) - Com Desconto</option>
+                                        <option value="entrada50">50% Entrada + 50% Entrega - Padrão</option>
+                                        <option value="parcelado">Parcelado em 3x - Taxa Administrativa 5%</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="scenarios-grid" id="scenarios-container"></div>
+
+                        <div class="pane-footer">
+                            <button type="button" class="btn-secondary" onclick="setWizardStep(1)">← Voltar ao Orçamento</button>
+                            <button type="button" class="btn-primary" onclick="navigateTo('proposta')">Ir para Tela de Proposta →</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. TELA DE PROPOSTA -->
+                <section id="view-proposta" class="view">
+                    <div class="panel-card no-print mb-20">
+                        <h3 class="card-title">Informações do Profissional e Validade</h3>
+                        <p class="card-subtitle">Preencha os dados abaixo para compor o cabeçalho e rodapé da proposta comercial.</p>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prof-nome">Nome do Profissional / Empresa</label>
+                                <input type="text" id="prof-nome" placeholder="Ex: Soluções em TI">
+                            </div>
+                            <div class="form-group">
+                                <div class="doc-type-header">
+                                    <label for="prof-doc" id="label-prof-doc">CPF (Opcional)</label>
+                                    <div class="doc-checkboxes">
+                                        <label class="chk-label">
+                                            <input type="checkbox" id="chk-cpf" checked onchange="alternarTipoDoc('cpf')"> CPF
+                                        </label>
+                                        <label class="chk-label">
+                                            <input type="checkbox" id="chk-cnpj" onchange="alternarTipoDoc('cnpj')"> CNPJ
+                                        </label>
+                                    </div>
+                                </div>
+                                <input type="text" id="prof-doc" inputmode="numeric" maxlength="14" placeholder="Ex: 000.000.000-00">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group flex-2">
+                                <label for="prof-contato">Contato (E-mail / WhatsApp / Cidade)</label>
+                                <input type="text" id="prof-contato" placeholder="Ex: contato@email.com | (31) 99999-0000 | Belo Horizonte - MG">
+                            </div>
+                            <div class="form-group max-160">
+                                <label for="proposta-validade">Validade (dias)</label>
+                                <input type="number" id="proposta-validade" min="1" value="15">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DOCUMENTO CONSOLIDADO PARA EXPORTAÇÃO PDF -->
+                    <article class="proposal-sheet" id="printable-proposal">
+                        <div class="prop-top">
+                            <div>
+                                <span class="prop-badge">PROPOSTA COMERCIAL</span>
+                                <h2 id="doc-projeto-titulo">Nome do Projeto</h2>
+                                <p>Preparado para: <strong id="doc-cliente-nome">Cliente</strong></p>
+                            </div>
+                            <div class="prop-dates">
+                                <p>Data de emissão: <strong id="doc-data"></strong></p>
+                                <p>Validade: <strong id="doc-validade">15 dias</strong></p>
+                            </div>
+                        </div>
+
+                        <div class="prop-block">
+                            <h4 class="prop-sec-title">1. Descrição do Serviço</h4>
+                            <p id="doc-servico-descricao" class="prop-desc-text">Prestação de serviços técnicos especializados conforme etapas detalhadas abaixo.</p>
+                        </div>
+
+                        <div class="prop-block">
+                            <h4 class="prop-sec-title">2. Itens do Orçamento e Investimento</h4>
+                            <table class="clean-table">
+                                <thead>
+                                    <tr>
+                                        <th>Item / Etapa</th>
+                                        <th class="text-right">Horas Estimadas</th>
+                                        <th class="text-right">Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="doc-lista-etapas"></tbody>
+                            </table>
+                        </div>
+
+                        <div class="prop-summary-grid">
+                            <div>
+                                <h4 class="prop-sec-title">3. Condições de Pagamento</h4>
+                                <p id="doc-condicao-texto"></p>
+                                <small class="prop-note">Os prazos de execução iniciam-se após o aceite formal desta proposta.</small>
+                            </div>
+                            <div class="prop-totals">
+                                <div><span>Serviços Técnicos:</span> <strong id="doc-subtotal">R$ 0,00</strong></div>
+                                <div><span>Custos Adicionais:</span> <strong id="doc-adicionais">R$ 0,00</strong></div>
+                                <div id="doc-linha-desconto" class="text-green"><span>Desconto Aplicado:</span> <strong id="doc-desconto">- R$ 0,00</strong></div>
+                                <div class="prop-final-total"><span>Valor Total:</span> <strong id="doc-total-final">R$ 0,00</strong></div>
+                            </div>
+                        </div>
+
+                        <div class="prop-sign">
+                            <div>
+                                <strong id="doc-prof-nome">Profissional</strong>
+                                <p id="doc-prof-doc" class="prop-subinfo"></p>
+                                <p id="doc-prof-contato" class="prop-subinfo"></p>
+                            </div>
+                            <div class="sign-line">Assinatura / Aceite do Cliente</div>
+                        </div>
+                    </article>
+
+                    <div class="pane-footer no-print">
+                        <button type="button" class="btn-secondary" onclick="navigateTo('novo-orcamento')">← Editar Orçamento</button>
+                        <div class="btn-group">
+                            <button type="button" class="btn-primary" onclick="salvarOrcamentoNoHistorico(false)">Salvar Orçamento</button>
+                            <button type="button" class="btn-success" onclick="salvarOrcamentoNoHistorico(true)">Concluir e Salvar em PDF</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. ORÇAMENTOS SALVOS -->
+                <section id="view-orcamentos-salvos" class="view">
+                    <div class="panel-card">
+                        <div class="saved-header">
+                            <div>
+                                <h3 class="card-title">Histórico de Orçamentos</h3>
+                                <p class="card-subtitle">Propostas salvas localmente neste navegador.</p>
+                            </div>
+                            <button type="button" class="btn-primary" onclick="iniciarNovoLimpo()">+ Novo Orçamento</button>
+                        </div>
+
+                        <div class="table-wrap">
+                            <table class="clean-table">
+                                <thead>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Projeto</th>
+                                        <th>Cliente</th>
+                                        <th>Condição</th>
+                                        <th>Valor Final</th>
+                                        <th class="text-right">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="lista-salvos"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <script src="javascript/funcionalidades.js"></script>
+</body>
+</html>
